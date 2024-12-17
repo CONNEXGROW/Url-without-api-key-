@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .highlights {
+            margin-top: 20px;
+        }
+        .positive, .negative {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .positive {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .negative {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>URL Checker</h1>
+        <input type="text" id="urlInput" placeholder="Enter a URL (e.g., https://example.com)">
+        <button onclick="checkURL()">Check URL</button>
+        <div class="highlights" id="result"></div>
+    </div>
+    <script>
+        function checkURL() {
+            const url = document.getElementById("urlInput").value;
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "";
+
+            // Example pre-defined conditions for checking
+            const positives = [];
+            const negatives = [];
+
+            if (url.startsWith("https")) {
+                positives.push("The website has a valid SSL certificate.");
+            } else {
+                negatives.push("The website does not have a valid SSL certificate.");
+            }
+
+            if (url.includes("game")) {
+                negatives.push("It seems you can download games from this site, which may be risky.");
+            }
+
+            if (url.includes(".com")) {
+                positives.push("The website has a .com domain, which is commonly trusted.");
+            }
+
+            if (url.includes("oceansofgames")) {
+                negatives.push("We found mainly negative reviews about this site.");
+            } else {
+                positives.push("The site appears to have a neutral reputation.");
+            }
+
+            // Generate results
+            if (positives.length > 0) {
+                const positiveDiv = document.createElement("div");
+                positiveDiv.classList.add("positive");
+                positiveDiv.innerHTML = `<h3>Positive Highlights:</h3><ul>${positives.map(p => `<li>${p}</li>`).join("")}</ul>`;
+                resultDiv.appendChild(positiveDiv);
+            }
+
+            if (negatives.length > 0) {
+                const negativeDiv = document.createElement("div");
+                negativeDiv.classList.add("negative");
+                negativeDiv.innerHTML = `<h3>Negative Highlights:</h3><ul>${negatives.map(n => `<li>${n}</li>`).join("")}</ul>`;
+                resultDiv.appendChild(negativeDiv);
+            }
+        }
+    </script>
+</body>
+</html>
